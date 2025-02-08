@@ -1,4 +1,3 @@
-const fs = require("fs");
 const xml2js = require("xml2js");
 const CreditReport = require("../models/CreditReport");
 
@@ -8,8 +7,7 @@ exports.processXML = async (req, res) => {
       return res.status(400).json({ message: "No file uploaded" });
     }
 
-    const filePath = req.file.path;
-    const xmlData = fs.readFileSync(filePath, "utf-8");
+    const xmlData = req.file.buffer.toString("utf-8");
 
     xml2js.parseString(xmlData, async (err, result) => {
       if (err) {
@@ -20,7 +18,6 @@ exports.processXML = async (req, res) => {
 
       try {
         await CreditReport.create(transformedData);
-        fs.unlinkSync(filePath);
         res.json({ message: "XML processed successfully", data: transformedData });
       } catch (dbError) {
         console.error("Database Error:", dbError);

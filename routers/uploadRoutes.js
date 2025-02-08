@@ -4,7 +4,10 @@ const { processXML } = require("../controllers/uploadController");
 const CreditReport = require("../models/CreditReport");
 
 const router = express.Router();
-const upload = multer({ dest: "uploads/" });
+
+// Configure Multer to use memory storage
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 // Upload XML file and process
 router.post("/upload", upload.single("file"), processXML);
