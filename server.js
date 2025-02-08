@@ -11,7 +11,7 @@ const app = express();
 const corsOption = {
     origin: [
         "http://localhost:5173",
-        // ""
+        "https://xml-frontend-gxe3ffwgu-akhileshs-projects-21204547.vercel.app/"
     ],
     credentials: true,
 };
