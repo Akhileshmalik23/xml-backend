@@ -8,15 +8,17 @@ dotenv.config();
 connectDB();
 
 const app = express();
-const corsOption = {
-    origin: [
-        "http://localhost:5173",
-        "https://xml-frontend-gxe3ffwgu-akhileshs-projects-21204547.vercel.app/"
-    ],
-    credentials: true,
+
+const corsOptions = {
+    origin: "*",
+    methods: "GET,POST,PUT,DELETE,OPTIONS",
+    allowedHeaders: "Content-Type,Authorization",
+    credentials: true
 };
 
-app.use(cors(corsOption));
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
+
 app.use(express.json());
 
 app.use("/api", uploadRoutes);
